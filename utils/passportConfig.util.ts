@@ -1,7 +1,7 @@
 import { PassportStatic } from 'passport';
 import { Strategy as LocalStrategy, VerifyFunction } from 'passport-local';
 import bcrypt from "bcrypt";
-import { User } from "./mockDB.util"; 
+import { User } from "./mockDB.util";
 
 type GetUserByEmail = (email: string) => User | undefined;
 type GetUserById = (id: string) => User | undefined;
@@ -27,8 +27,8 @@ const initialize = (passport: PassportStatic, getUserByEmail: GetUserByEmail, ge
         passwordField: 'password'
     }, authenticateUser));
 
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
+    passport.serializeUser((user: Express.User, done: (err: any, id?: unknown) => void) => {
+        done(null, (<User>user).id);
     });
 
     passport.deserializeUser((id, done) => {

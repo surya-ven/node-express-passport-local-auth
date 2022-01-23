@@ -2,12 +2,12 @@ import { Router, Request, Response } from "express";
 import passport from "passport";
 import bcrypt from "bcrypt";
 import { checkAuthenticated, checkNotAuthenticated } from "../middleware/auth.middleware";
-import { users } from "../utils/mockDB.util";
+import { users, User } from "../utils/mockDB.util";
 
 const router = Router();
 
 router.get("/", checkAuthenticated, (req: Request, res: Response) => {
-    res.render("index.ejs", { name: req.user?.name });
+    res.render("index.ejs", { name: (<User>(req.user)).name });
 });
 
 router.get("/login", checkNotAuthenticated, (req: Request, res: Response) => {
